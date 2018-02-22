@@ -1,0 +1,10 @@
+TABLE = csvimport('SD_0222_110037.csv');
+table_size = size(CONTROL_TABLE);
+CONTROL_PROG = cell2mat(CONTROL_TABLE(2:table_size(1),1:7));
+T_program = CONTROL_PROG(:,1); %[s]
+Fx_program = CONTROL_PROG(:,2); %[N]
+Fy_program = CONTROL_PROG(:,3); %[N]
+Fz_program = CONTROL_PROG(:,4); %[N]
+Roll_program = CONTROL_PROG(:,5)*pi/180; %[rad]
+Pitch_program = CONTROL_PROG(:,6)*pi/180; %[rad]
+Yaw_program = CONTROL_PROG(:,7)*pi/180; %[rad]
