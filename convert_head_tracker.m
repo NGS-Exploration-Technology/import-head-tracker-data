@@ -1,4 +1,4 @@
-TABLE = csvimport('SD_0227_143901.csv');
+TABLE = csvimport('SD_0227_181651.csv');
 table_size = size(TABLE);
 TABLE_DATA = cell2mat(TABLE(2:table_size(1),1:9));
 T_table = TABLE_DATA(:,1); %[s]
