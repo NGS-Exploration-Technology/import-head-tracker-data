@@ -2,8 +2,10 @@ TABLE = csvimport('SD_0226_172246.csv');
 table_size = size(TABLE);
 TABLE_DATA = cell2mat(TABLE(2:table_size(1),1:25));
 T_table = TABLE_DATA(:,1); %[s]
-Roll_data = TABLE_DATA(:,5); %[rad]
-Pitch_data = TABLE_DATA(:,6); %[rad]
+%Roll_data = TABLE_DATA(:,5); %[rad]
+Roll_data = TABLE_DATA(:,6); %[rad]
+%Pitch_data = TABLE_DATA(:,6); %[rad]
+Pitch_data = TABLE_DATA(:,5); %[rad]
 Yaw_data = TABLE_DATA(:,7); %[rad]
 
 t_out = zeros(size(Roll_data));
@@ -18,9 +20,9 @@ dt = 0.01;
 
 index = 1;
 while(index<length(Roll_data))
-   psi = Pitch_data(index)*(180/pi);
-   theta = Roll_data(index)*(180/pi);
-   phi = Yaw_data(index)*(180/pi);
+   theta = Pitch_data(index)*(180/pi);
+   phi = Roll_data(index)*(180/pi);
+   psi = Yaw_data(index)*(180/pi);
    ea = SpinCalc('EA213toEA321',[phi,theta,psi]);
    
    %psi_out(index) = ea(1)*(180/pi);
