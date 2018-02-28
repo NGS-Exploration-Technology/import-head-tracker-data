@@ -18,6 +18,14 @@ Fx_out = zeros(size(Q1));
 Fy_out = zeros(size(Q1));
 Depth_out = zeros(size(Q1));
 
+phi = 0;
+theta = 90;
+psi = 0;
+
+DCM = [cos(psi)*cos(theta) -sin(psi)*cos(phi)+cos(psi)*sin(theta)*sin(phi)  sin(psi)*sin(phi)+cos(psi)*cos(phi)*sin(theta)
+       sin(psi)*cos(theta) cos(psi)*cos(phi)+sin(phi)*sin(theta)*sin(psi)   -cos(psi)*sin(phi)+sin(theta)*sin(psi)*cos(phi)
+       -sin(theta)         cos(theta)*sin(phi)                              cos(theta)*cos(phi)                            ];
+
 ea_deg_old = zeros(1,3);
 
 dt = 0.01;
@@ -25,7 +33,9 @@ dt = 0.01;
 index = 1;
 while(index<length(Q1))
    q = [Q1, Q2, Q3, Q4];
-   ea = quatern2euler(q(index,:));
+   ea_raw = quatern2euler(q(index,:))';
+   
+   ea = DCM\ea_raw;
    
    ea_deg = ea.*(180/pi); %convert to degrees
    
