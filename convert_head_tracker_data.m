@@ -4,6 +4,8 @@ function convert_head_tracker_data(input_filename, output_filename)
 %   convert quaternion input from Wavefront Labs 'Sensor Data' app to
 %   control input format for sim_ROV.
 %
+%   See: http://wavefrontlabs.com/Wavefront_Labs/Sensor_Data.html
+%
 %   Note: Configuration for 'Sensor Data' must only check Attitude
 %   Quaternion, Mag and True Heading, and Altitude.  Sample rate must be
 %   100Hz
