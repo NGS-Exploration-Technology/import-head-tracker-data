@@ -2,10 +2,15 @@ TABLE = csvimport('SD_0227_181651.csv');
 table_size = size(TABLE);
 TABLE_DATA = cell2mat(TABLE(2:table_size(1),1:9));
 T_table = TABLE_DATA(:,1); %[s]
-Q1 = TABLE_DATA(:,2); %[rad]
-Q2 = TABLE_DATA(:,3); %[rad]
-Q3 = TABLE_DATA(:,4); %[rad]
-Q4 = TABLE_DATA(:,5); %[rad]
+Qx = TABLE_DATA(:,2); %[rad]
+Qy = TABLE_DATA(:,3); %[rad]
+Qz = TABLE_DATA(:,4); %[rad]
+Qw = TABLE_DATA(:,5); %[rad]
+
+Q1 = Qx;
+Q2 = Qy;
+Q3 = Qz;
+Q4 = Qw;
 
 t_out = zeros(size(Q1));
 phi_out = zeros(size(Q1));
@@ -26,17 +31,21 @@ DCM = [cos(psi)*cos(theta) -sin(psi)*cos(phi)+cos(psi)*sin(theta)*sin(phi)  sin(
        sin(psi)*cos(theta) cos(psi)*cos(phi)+sin(phi)*sin(theta)*sin(psi)   -cos(psi)*sin(phi)+sin(theta)*sin(psi)*cos(phi)
        -sin(theta)         cos(theta)*sin(phi)                              cos(theta)*cos(phi)                            ];
 
+q = [Q1(1), Q2(1), Q3(1), Q4(1)];
+qr = [1, 0, 0, 0]';
+r = qMul(qr,qInv(q));
+
 ea_deg_old = zeros(1,3);
 
 dt = 0.01;
 
 index = 1;
 while(index<length(Q1))
-   q = [Q1, Q2, Q3, Q4];
-   ea_raw = quatern2euler(q(index,:))';
    
-   ea = DCM\ea_raw;
    
+   q = [Q1(index), Q2(index), Q3(index), Q4(index)]';
+   qr = qMul(r,q);
+   ea = quatern2euler(qr')';
    ea_deg = ea.*(180/pi); %convert to degrees
    
    if (abs(ea_deg(1))>100)
