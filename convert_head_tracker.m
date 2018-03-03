@@ -22,6 +22,7 @@ psi_offset = 0;
 Fx_out = zeros(size(Q1));
 Fy_out = zeros(size(Q1));
 Depth_out = zeros(size(Q1));
+control_enable_out = ones(size(Q1));
 
 phi = 0;
 theta = 90;
@@ -82,9 +83,9 @@ while(index<length(Q1))
    t_out(index) = t_out(index-1) + dt; 
 end
 
-output_table = [t_out, Fx_out, Fy_out, Depth_out, psi_out, theta_out, phi_out];
+output_table = [t_out, Fx_out, Fy_out, Depth_out, psi_out, theta_out, phi_out, control_enable_out];
 
 filename = 'control_program.csv';
-headers = {'Time[s]', 'Fx[N]', 'Fy[N]', 'Depth[m]', 'Phi[deg]', 'Theta[deg]',' Psi[deg]'};
+headers = {'Time[s]', 'Fx[N]', 'Fy[N]', 'Depth[m]', 'Phi[deg]', 'Theta[deg]','Psi[deg]', 'Control Enable'};
 csvwrite_with_headers(filename, output_table, headers);
 
